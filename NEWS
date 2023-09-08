@@ -1,3 +1,9 @@
+# rusquant 1.0.2
+
+* update docs and examples in more robust style
+* Fix errors while uploading data from investing using functions getDividends,getEarnings,getEconomic
+* fix problem UTF-8 in getSymbolList
+
 # rusquant 1.0.1
 
 * add trading API from Tinkoff, Alor, Finam

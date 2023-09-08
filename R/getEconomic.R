@@ -4,12 +4,12 @@
 #'
 #' @param from A date in the format of YYYY-MM-DD. Defaults to 10 days ago from the current system date.
 #' @param to A date in the format of YYYY-MM-DD. Defaults to the current system date.
-#' @param country a character string with the country name to filter dividends data for (only for Investing.com)
+#' @param country a character string with the country name to filter dividends data for (only for Investing.com). One from Argentina,Australia,Austria,Bahrain,Belgium,Bosnia-Herzegovina,Botswana,Brazil,Bulgaria,Canada,Chile,China,Colombia,Costa Rica,Croatia,Cyprus,Czech Republic,Denmark,Egypt,Finland,France,Germany,Greece,Hong Kong,Hungary,Iceland,India,Indonesia,Ireland,Israel,Italy,Japan,Jordan,Kenya,Kuwait,Lebanon,Luxembourg,Malaysia,Malta,Mauritius,Mexico,Morocco,Namibia,Netherlands,New Zealand,Nigeria,Norway,Oman,Pakistan,Palestinian Territory,Peru,Philippines,Poland,Portugal,Qatar,Romania,Russia,Saudi Arabia,Serbia,Singapore,Slovakia,Slovenia,South Africa,South Korea,Spain,Sri Lanka,Sweden,Switzerland,Taiwan,Thailand,Tunisia,Turkey,Uganda,Ukraine,United Arab Emirates,United Kingdom,United States,Venezuela,Vietnam,Zimbabwe
 #' @return A data frame containing IPO calendar data for the specified date range.
 #' @note Not for the faint of heart. All profits and losses related are yours and yours alone. If you don't like it, write it yourself.
 #' @author Vyacheslav Arbuzov
 #' @examples
-#' getEconomic(from = Sys.Date(),to = Sys.Date()+35,country='Belgium')
+#' getEconomic(from = '2023-02-07',to = '2023-02-23',country='Belgium')
 #' @export
 
 
@@ -34,7 +34,7 @@
   }
   data = paste0(paste0('country%5B%5D=',id_country,'&',collapse = ''),
                 'dateFrom=',date,'&dateTo=',end_date,'&currentTab=custom&submitFilters=1&limit_from=0')
-
+  Records <- 'cannot connect to server'
   headers = add_headers('Host' = 'www.investing.com',
                         'Origin' = 'https://www.investing.com',
                         'Referer' = 'https://www.investing.com/economic-calendar/',
@@ -98,11 +98,7 @@
       }
     }
   }
-  if(status_code(r) != 200)
-  {
-    Records <- 'cannot connect to server'
-  }
-  return(Records)
+  if(exists('Records')) return(Records)
 }
 
 

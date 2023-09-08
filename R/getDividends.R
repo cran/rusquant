@@ -7,13 +7,13 @@
 #' @param api.key Tinkoff broker API key (only for Tinkoff broker)
 #' @param from start date of the dividends data. Default is 10 days ago
 #' @param to end date of the dividends data. Default is today
-#' @param country a character string with the country name to filter dividends data for (only for Investing.com)
+#' @param country a character string with the country name to filter dividends data for (only for Investing.com). One from Argentina,Australia,Austria,Bahrain,Belgium,Bosnia-Herzegovina,Botswana,Brazil,Bulgaria,Canada,Chile,China,Colombia,Costa Rica,Croatia,Cyprus,Czech Republic,Denmark,Egypt,Finland,France,Germany,Greece,Hong Kong,Hungary,Iceland,India,Indonesia,Ireland,Israel,Italy,Japan,Jordan,Kenya,Kuwait,Lebanon,Luxembourg,Malaysia,Malta,Mauritius,Mexico,Morocco,Namibia,Netherlands,New Zealand,Nigeria,Norway,Oman,Pakistan,Palestinian Territory,Peru,Philippines,Poland,Portugal,Qatar,Romania,Russia,Saudi Arabia,Serbia,Singapore,Slovakia,Slovenia,South Africa,South Korea,Spain,Sri Lanka,Sweden,Switzerland,Taiwan,Thailand,Tunisia,Turkey,Uganda,Ukraine,United Arab Emirates,United Kingdom,United States,Venezuela,Vietnam,Zimbabwe
 #'
 #' @return a list with dividends data
 #' @note Not for the faint of heart. All profits and losses related are yours and yours alone. If you don't like it, write it yourself.
 #' @author Vyacheslav Arbuzov
 #' @examples
-#' getDividends(from = Sys.Date(),to = Sys.Date()+2,country = "Australia")
+#' getDividends(from = '2023-08-01',to = '2023-08-05',country = "Australia")
 #' @export
 
 "getDividends" <- function(src='investing',figi='',api.key='',from=Sys.Date()-10,to=Sys.Date(),country='')
@@ -81,7 +81,7 @@
       data = paste0(paste0('country%5B%5D=',id_country,'&',collapse = ''),
                     'dateFrom=',start_date,'&dateTo=',end_date,'&currentTab=custom&submitFilters=1&limit_from=0')
 
-
+    Records <- 'cannot connect to server'
     headers = add_headers('Host' = 'www.investing.com',
                           'Origin' = 'https://www.investing.com',
                           'Referer' = 'https://www.investing.com/dividends-calendar/',
@@ -152,10 +152,6 @@
       }
       }
     }
-    if(status_code(r) != 200)
-    {
-      Records <- 'cannot connect to server'
-    }
     if(length(symbols)>1)
     {
     if(exists('Records_result'))
@@ -164,7 +160,7 @@
       Records_result <- Records
     }
     }
-    return(unique(Records_result))
+    if(exists('Records_result'))  return(unique(Records_result))
     }
 }
 

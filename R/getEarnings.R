@@ -4,12 +4,12 @@
 #'
 #' @param from the start date in yyyy-mm-dd format (default is 10 days prior to current date)
 #' @param to the end date in yyyy-mm-dd format (default is the current date)
-#' @param country the country from which to get earnings data (default is United States)
+#' @param country the country from which to get earnings data (default is United States). One from Argentina,Australia,Austria,Bahrain,Belgium,Bosnia-Herzegovina,Botswana,Brazil,Bulgaria,Canada,Chile,China,Colombia,Costa Rica,Croatia,Cyprus,Czech Republic,Denmark,Egypt,Finland,France,Germany,Greece,Hong Kong,Hungary,Iceland,India,Indonesia,Ireland,Israel,Italy,Japan,Jordan,Kenya,Kuwait,Lebanon,Luxembourg,Malaysia,Malta,Mauritius,Mexico,Morocco,Namibia,Netherlands,New Zealand,Nigeria,Norway,Oman,Pakistan,Palestinian Territory,Peru,Philippines,Poland,Portugal,Qatar,Romania,Russia,Saudi Arabia,Serbia,Singapore,Slovakia,Slovenia,South Africa,South Korea,Spain,Sri Lanka,Sweden,Switzerland,Taiwan,Thailand,Tunisia,Turkey,Uganda,Ukraine,United Arab Emirates,United Kingdom,United States,Venezuela,Vietnam,Zimbabwe
 #' @return a data frame with earnings data
 #' @note Not for the faint of heart. All profits and losses related are yours and yours alone. If you don't like it, write it yourself.
 #' @author Vyacheslav Arbuzov
 #' @examples
-#' getEarnings(from = Sys.Date(),to = Sys.Date()+3,country='Belgium')
+#' getEarnings(from = '2023-02-07',to = '2023-02-13',country='Belgium')
 #' @export
 
 getEarnings <- function(from=Sys.Date()-5,to=Sys.Date()+5,country='United States')
@@ -20,7 +20,7 @@ getEarnings <- function(from=Sys.Date()-5,to=Sys.Date()+5,country='United States
   end_date = to
   start_date = from
   country_dict <- t(matrix(c(29,'Argentina',25,'Australia',54,'Austria',145,'Bahrain',34,'Belgium',174,'Bosnia-Herzegovina',163,'Botswana',32,'Brazil',70,'Bulgaria',6,'Canada',27,'Chile',37,'China',122,'Colombia',15,'Costa Rica',113,'Croatia',107,'Cyprus',55,'Czech Republic',24,'Denmark',59,'Egypt',71,'Finland',22,'France',17,'Germany',51,'Greece',39,'Hong Kong',93,'Hungary',106,'Iceland',14,'India',48,'Indonesia',33,'Ireland',23,'Israel',10,'Italy',35,'Japan',92,'Jordan',57,'Kenya',94,'Kuwait',68,'Lebanon',103,'Luxembourg',42,'Malaysia',109,'Malta',188,'Mauritius',7,'Mexico',105,'Morocco',172,'Namibia',21,'Netherlands',43,'New Zealand',20,'Nigeria',60,'Norway',87,'Oman',44,'Pakistan',193,'Palestinian Territory',125,'Peru',45,'Philippines',53,'Poland',38,'Portugal',170,'Qatar',100,'Romania',56,'Russia',52,'Saudi Arabia',238,'Serbia',36,'Singapore',90,'Slovakia',112,'Slovenia',110,'South Africa',11,'South Korea',26,'Spain',162,'Sri Lanka',9,'Sweden',12,'Switzerland',46,'Taiwan',41,'Thailand',202,'Tunisia',63,'Turkey',123,'Uganda',61,'Ukraine',143,'United Arab Emirates',4,'United Kingdom',5,'United States',138,'Venezuela',178,'Vietnam',75,'Zimbabwe'),2,80))
-
+  Records <- 'cannot connect to server'
   if(country == '')
     id_country <- country_dict[,1]
 
@@ -122,10 +122,7 @@ getEarnings <- function(from=Sys.Date()-5,to=Sys.Date()+5,country='United States
     }
   }
   Sys.setlocale("LC_TIME", current_locale)
-  if(status_code(r) != 200)
-  {
-    Records <- 'cannot connect to server'
-  }
+
   if(length(symbols)>1)
   {
     if(exists('Records_result'))
@@ -134,7 +131,7 @@ getEarnings <- function(from=Sys.Date()-5,to=Sys.Date()+5,country='United States
       Records_result <- Records
   }
   }
-  return(unique(Records_result))
+  if(exists('Records_result')) return(unique(Records_result))
 }
 
 

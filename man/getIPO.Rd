@@ -21,7 +21,7 @@ This function retrieves IPO calendar data from Investing.com for a specified dat
 Not for the faint of heart. All profits and losses related are yours and yours alone. If you don't like it, write it yourself.
 }
 \examples{
-getIPO(from=Sys.Date(),to=Sys.Date()+3)
+getIPO(from='2023-01-23',to='2023-01-25')
 }
 \author{
 Vyacheslav Arbuzov

@@ -38,7 +38,7 @@ getSymbolList <- function(src='poloniex',
 
   if(src == 'rusquant')
   {
-    rusquant.url <- 'https://api.rusquant.ru/performance'
+    rusquant.url <- 'https://api.rusquant.io/performance'
     rusquant.params = list('token' = api.key,
                            'market' = 'ru')
     response <- GET(rusquant.url,query = rusquant.params)
@@ -212,7 +212,7 @@ getSymbolList <- function(src='poloniex',
   if (src == "finam"  & api.key=='')
   {
     tmp <- tempfile()
-    download.file(downloadUrl,destfile = tmp,headers = headers)
+    download.file(downloadUrl, destfile = tmp, mode = "wb",headers = headers)
   }
 
   if (src == "investing")
@@ -237,6 +237,7 @@ getSymbolList <- function(src='poloniex',
   {
     fr <- readLines(con = tmp, warn = FALSE,encoding = 'UTF-8')
     unlink(tmp)
+    fr = iconv(fr, "WINDOWS-1251", "UTF8")
     EmitentIds <- sub("var .*?= \\[", "", fr[1])
     EmitentIds <- sub("\\];", "", EmitentIds)
     EmitentIds <- strsplit(EmitentIds, ",")
