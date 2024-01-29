@@ -25,7 +25,7 @@
 #' getSymbolList()
 #' @export
 
-getSymbolList <- function(src='poloniex',
+getSymbolList = function(src='poloniex',
                   verbose=FALSE,
                   auto.assign=FALSE,
                   country='',
@@ -34,8 +34,9 @@ getSymbolList <- function(src='poloniex',
                   env = globalenv(),
                   user_agent = NULL)
 {
+  tryCatch(
+    {
   src <- tolower(src)
-
   if(src == 'rusquant')
   {
     rusquant.url <- 'https://api.rusquant.io/performance'
@@ -303,6 +304,16 @@ getSymbolList <- function(src='poloniex',
     return(result)
   }
   return(rawdata_m)
+    },
+  #if an error occurs, tell me the error
+  error=function(e) {
+    message('Server not response - try later')
+    #print(e)
+  },
+  #if a warning occurs, tell me the warning
+  warning=function(w) {
+    message('Check your internet connection')
+  })
 }
 
 

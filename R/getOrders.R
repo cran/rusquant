@@ -33,8 +33,9 @@ getOrders = function(src = '',
                      stopOrders = FALSE,
                      verbose = TRUE)
   {
+  tryCatch(
+    {
   src <- tolower(src)
-
   ## choose broker/exchange
   if(src == 'tinkoff')
   {
@@ -95,4 +96,14 @@ getOrders = function(src = '',
     if(response$status_code!=200)
       if(verbose) return(content(response, as = "parsed"))
   }
+    },
+  #if an error occurs, tell me the error
+  error=function(e) {
+    message('Server not response - try later')
+    #print(e)
+  },
+  #if a warning occurs, tell me the warning
+  warning=function(w) {
+    message('Check your internet connection')
+  })
 }

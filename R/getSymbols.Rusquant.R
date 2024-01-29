@@ -25,7 +25,7 @@
 #' }
 #' @export
 
-"getSymbols.Rusquant" <-
+getSymbols.Rusquant =
   function(Symbols,env = globalenv(),
            field = NULL,
            from='2007-01-01',
@@ -37,6 +37,8 @@
            auto.assign=FALSE,
            ...)
 {
+    tryCatch(
+      {
   Symbol.name = Symbols[[1]]
   rusquant.url <- "https://api.rusquant.io/alpha"
   rusquant.params = list('symbol' = Symbol.name,
@@ -52,5 +54,14 @@
   Symbol.name <-toupper(gsub('\\^','',Symbol.name))
   if(auto.assign) assign(Symbol.name,data,env)
   if(auto.assign) return(Symbols)
-return(data)
+  return(data)},
+  #if an error occurs, tell me the error
+  error=function(e) {
+    message('Server of Rusquant not response - try later')
+    #print(e)
+  },
+  #if a warning occurs, tell me the warning
+  warning=function(w) {
+    message('Check your internet connection')
+  })
 }

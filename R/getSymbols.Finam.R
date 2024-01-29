@@ -22,7 +22,7 @@
 #' getSymbols('SBER',src='Finam',api.key = api_key)
 #' @export
 
-"getSymbols.Finam" <-
+getSymbols.Finam =
   function(Symbols,env = globalenv(),
            from='2007-01-01',
            to=Sys.Date(),
@@ -35,6 +35,8 @@
            user_agent = NULL,
            ...)
   {
+    tryCatch(
+      {
     Symbol <- Market <- Id <- NULL
     # choose period
     p <- 0
@@ -159,4 +161,14 @@
 
     return(fr)
     }
+      },
+    #if an error occurs, tell me the error
+    error=function(e) {
+      message('Server of Finam not response - try later')
+      #print(e)
+    },
+    #if a warning occurs, tell me the warning
+    warning=function(w) {
+      message('Check your internet connection')
+    })
   }

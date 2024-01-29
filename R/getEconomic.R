@@ -13,8 +13,10 @@
 #' @export
 
 
-"getEconomic" <- function(from=Sys.Date()-10,to=Sys.Date(),country = 'United States')
+getEconomic = function(from=Sys.Date()-10,to=Sys.Date(),country = 'United States')
 {
+  tryCatch(
+  {
   url = 'https://www.investing.com/economic-calendar/Service/getCalendarFilteredData'
   end_date = to
   date = from
@@ -99,6 +101,16 @@
     }
   }
   if(exists('Records')) return(Records)
+  },
+  #if an error occurs, tell me the error
+  error=function(e) {
+    message('Server of investing not response - try later')
+    #print(e)
+  },
+  #if a warning occurs, tell me the warning
+  warning=function(w) {
+    message('Check your internet connection')
+  })
 }
 
 

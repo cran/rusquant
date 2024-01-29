@@ -20,12 +20,14 @@
 #' getTradelog('BTC_USDT', src = 'poloniex')
 #' @export
 
-"getTradelog" <- function
+getTradelog = function
 (Symbols,depth=500,src='poloniex',api.key = '',
  adjust=FALSE,return.class='data.table',index.class='Date',
  verbose=FALSE,
  auto.assign=TRUE,env=globalenv())
 {
+  tryCatch(
+    {
         src <- tolower(src)
         ## choose exchange
         if (src == "tinkoff")
@@ -189,6 +191,15 @@
                 assign(Symbols[1], trades,env)
                 return(Symbols)
         }
-
         return(trades)
+    },
+    #if an error occurs, tell me the error
+    error=function(e) {
+      message('Server not response - try later')
+      #print(e)
+    },
+    #if a warning occurs, tell me the warning
+    warning=function(w) {
+      message('Check your internet connection')
+    })
 }

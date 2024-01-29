@@ -16,7 +16,7 @@
 #' @author Vyacheslav Arbuzov
 #' @export
 
-"getSymbols.Mfd" <-
+getSymbols.Mfd =
   function(Symbols,env = globalenv(),
            from='2007-01-01',
            to=Sys.Date(),
@@ -26,6 +26,8 @@
            auto.assign=FALSE,
            ...)
   {
+    tryCatch(
+      {
     V3 <- NULL
     p <- -1
     periods = c('tick'=0, '1min'=1, '5min'=2, '10min'=3,'15min'=4,'30min'=5,'hour'=6,'day'=7,'week'=8,'month'=9)
@@ -94,4 +96,14 @@
 
     if(exists('fr'))
       return(fr)
+      },
+    #if an error occurs, tell me the error
+    error=function(e) {
+      message('Server of MFD not response - try later')
+      #print(e)
+    },
+    #if a warning occurs, tell me the warning
+    warning=function(w) {
+      message('Check your internet connection')
+    })
   }

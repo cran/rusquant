@@ -20,7 +20,7 @@
 #' getSymbols.Tinkoff("BBG004730N88",from=Sys.Date()-5, ap.key = "your_api_key",verbose=TRUE)
 #' @export
 
-"getSymbols.Tinkoff" <-
+getSymbols.Tinkoff <-
   function(Symbols,
            from='2007-01-01',
            to=Sys.Date(),
@@ -32,7 +32,8 @@
            auto.assign=FALSE,
            ...)
   {
-
+    tryCatch(
+      {
   periods = c('1min' = 'CANDLE_INTERVAL_1_MIN', '5min' = 'CANDLE_INTERVAL_5_MIN', '15min' = 'CANDLE_INTERVAL_15_MIN', 'hour' = 'CANDLE_INTERVAL_HOUR','day' =  'CANDLE_INTERVAL_DAY', '2min' = 'CANDLE_INTERVAL_2_MIN', '3min' =  'CANDLE_INTERVAL_3_MIN','10min' =  'CANDLE_INTERVAL_10_MIN','30min' =  'CANDLE_INTERVAL_30_MIN','2hour' =  'CANDLE_INTERVAL_2_HOUR', '4hour' =  'CANDLE_INTERVAL_4_HOUR','week' =   'CANDLE_INTERVAL_WEEK','month' =   'CANDLE_INTERVAL_MONTH')
   tcs.interval = periods[period]
 
@@ -62,6 +63,16 @@
   }
   if(response$status_code!=200)
     if(verbose) return(content(response, as = "parsed"))
+      },
+  #if an error occurs, tell me the error
+  error=function(e) {
+    message('Server of Tinkoff not response - try later')
+    #print(e)
+  },
+  #if a warning occurs, tell me the warning
+  warning=function(w) {
+    message('Check your internet connection')
+  })
 }
 
 

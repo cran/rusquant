@@ -37,6 +37,7 @@
 #' @import stringr
 #' @import utils
 #' @import rvest
+#' @import base64enc
 #' @importFrom jose jwt_split
 #' @importFrom stats runif
 #' @importFrom xts xts
@@ -58,6 +59,8 @@ placeOrder = function(src = 'tinkoff',
                       clientId = '',
                       verbose=TRUE)
 {
+  tryCatch(
+    {
   ## choose broker/exchange
   if(src == 'tinkoff')
   {
@@ -146,6 +149,16 @@ placeOrder = function(src = 'tinkoff',
     }
     }
   }
+    },
+  #if an error occurs, tell me the error
+  error=function(e) {
+    message('Server not response - try later')
+    #print(e)
+  },
+  #if a warning occurs, tell me the warning
+  warning=function(w) {
+    message('Check your internet connection')
+  })
 }
 
 

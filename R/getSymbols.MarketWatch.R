@@ -22,7 +22,7 @@
 #' getSymbols.MarketWatch(Symbols = 'tmubmusd03m',market = 'bond',countrycode = 'bx')
 #' @export
 
-"getSymbols.MarketWatch" <-
+getSymbols.MarketWatch =
   function(Symbols,env=globalenv(),
            from='2007-01-01',
            to=Sys.Date(),
@@ -34,6 +34,8 @@
            auto.assign=FALSE,
            ...)
   {
+    tryCatch(
+      {
     Symbol.name = Symbols[1]
     endpoint <- "https://www.marketwatch.com/investing/"
     mw.from = format(as.Date(from),'%m/%d/%Y')
@@ -47,4 +49,14 @@
 
     if(auto.assign) return(Symbol.name)
     return(df)
+      },
+    #if an error occurs, tell me the error
+    error=function(e) {
+      message('Server of MarketWatch not response - try later')
+      #print(e)
+    },
+    #if a warning occurs, tell me the warning
+    warning=function(w) {
+      message('Check your internet connection')
+    })
 }

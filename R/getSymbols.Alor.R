@@ -33,6 +33,8 @@ getSymbols.Alor <- function(Symbols,
                             auto.assign=FALSE,
                             ...)
 {
+  tryCatch(
+    {
   headers = ''
   if(!is.null(api.key))
   {
@@ -76,6 +78,16 @@ getSymbols.Alor <- function(Symbols,
     return(Symbols)
   }
   return(data_result)
+    },
+  #if an error occurs, tell me the error
+  error=function(e) {
+    message('Server of Alor not response - try later')
+    #print(e)
+  },
+  #if a warning occurs, tell me the warning
+  warning=function(w) {
+    message('Check your internet connection')
+  })
 }
 
 

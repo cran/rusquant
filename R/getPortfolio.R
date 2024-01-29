@@ -25,8 +25,9 @@ getPortfolio = function(src = '',
                         clientId = '',
                         verbose=TRUE)
 {
+  tryCatch(
+    {
   src <- tolower(src)
-
   ## choose BROKER/EXCHANGE
   if(src == 'tinkoff')
   {
@@ -83,5 +84,14 @@ getPortfolio = function(src = '',
     }
     if(response$status_code!=200)
       if(verbose) return(content(response, as = "parsed"))
-  }
+  }},
+  #if an error occurs, tell me the error
+  error=function(e) {
+    message('Server not response - try later')
+    #print(e)
+  },
+  #if a warning occurs, tell me the warning
+  warning=function(w) {
+    message('Check your internet connection')
+  })
 }

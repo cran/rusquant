@@ -16,8 +16,10 @@
 #' getDividends(from = '2023-08-01',to = '2023-08-05',country = "Australia")
 #' @export
 
-"getDividends" <- function(src='investing',figi='',api.key='',from=Sys.Date()-10,to=Sys.Date(),country='')
+getDividends = function(src='investing',figi='',api.key='',from=Sys.Date()-10,to=Sys.Date(),country='')
 {
+    tryCatch(
+    {
     src <- tolower(src)
     ## choose datasource
     if(src == 'tinkoff')
@@ -162,6 +164,16 @@
     }
     if(exists('Records_result'))  return(unique(Records_result))
     }
+    },
+    #if an error occurs, tell me the error
+    error=function(e) {
+      message('Server not response - try later')
+      #print(e)
+    },
+    #if a warning occurs, tell me the warning
+    warning=function(w) {
+      message('Check your internet connection')
+    })
 }
 
 

@@ -12,8 +12,10 @@
 #' getEarnings(from = '2023-02-07',to = '2023-02-13',country='Belgium')
 #' @export
 
-getEarnings <- function(from=Sys.Date()-5,to=Sys.Date()+5,country='United States')
+getEarnings = function(from=Sys.Date()-5,to=Sys.Date()+5,country='United States')
 {
+  tryCatch(
+  {
   url = 'https://www.investing.com/earnings-calendar/Service/getCalendarFilteredData'
   #end_date = '2019-05-17'
   #start_date = '2019-05-01'
@@ -132,6 +134,16 @@ getEarnings <- function(from=Sys.Date()-5,to=Sys.Date()+5,country='United States
   }
   }
   if(exists('Records_result')) return(unique(Records_result))
+  },
+  #if an error occurs, tell me the error
+  error=function(e) {
+    message('Server of investing not response - try later')
+    #print(e)
+  },
+  #if a warning occurs, tell me the warning
+  warning=function(w) {
+    message('Check your internet connection')
+  })
 }
 
 

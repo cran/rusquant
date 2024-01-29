@@ -20,7 +20,7 @@
 #' getOrderbook('BTC_USDT', src = 'poloniex')
 #' @export
 
-"getOrderbook" <- function #S3 function (Poloniex is a class of first argument)
+getOrderbook <- function #S3 function (Poloniex is a class of first argument)
 (Symbols,
  depth=10,
  src='poloniex',
@@ -30,7 +30,8 @@
  api.key = '',
  env=globalenv())
 {
-
+  tryCatch(
+    {
 		src <- tolower(src)
 		Price <- Volume <- isAsk <- NULL
 	  ## choose exchange
@@ -197,4 +198,14 @@ if (src == "xbtce")
         }
 
         return(orderbook)
+    },
+    #if an error occurs, tell me the error
+    error=function(e) {
+      message('Server not response - try later')
+      #print(e)
+    },
+    #if a warning occurs, tell me the warning
+    warning=function(w) {
+      message('Check your internet connection')
+    })
 }
