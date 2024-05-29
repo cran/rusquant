@@ -11,6 +11,8 @@ getOrderbook(
   adjust = FALSE,
   verbose = FALSE,
   auto.assign = TRUE,
+  market = "shares",
+  board = "tqbr",
   api.key = "",
   env = globalenv()
 )
@@ -27,6 +29,10 @@ getOrderbook(
 \item{verbose}{A logical value indicating whether to print detailed messages during the function's execution. Defaults to FALSE.}
 
 \item{auto.assign}{A logical value indicating whether to automatically assign the resulting object to the current environment. Defaults to TRUE.}
+
+\item{market}{A character string specifying type of market}
+
+\item{board}{A character string specifying type of board}
 
 \item{api.key}{A character string specifying the API key to use when retrieving data from Alor or Tinkoff. Defaults to "".}
 

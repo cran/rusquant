@@ -57,7 +57,7 @@ Download historical market data from GigaPack  for a given symbol and time range
 Not for the faint of heart. All profits and losses related are yours and yours alone. If you don't like it, write it yourself.
 }
 \examples{
-getSymbols.Gigapack('SBER', field = 'disb.q20',date='2024-01-12')
+getSymbols.Gigapack('SBER', field = 'disb.q20')
 }
 \author{
 Vyacheslav Arbuzov

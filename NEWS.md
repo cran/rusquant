@@ -1,7 +1,11 @@
-# rusquant 1.0.5
+# rusquant 1.1.0
 
-* add auth method to AlgoPack data
-* add TryCatch exception for all functions
+* change method of authentification using  auth
+* update methods using algopack
+* fix marketwatch 401 error
+* add to getOrderbook src moex
+* add to getTradelog src moex
+
 
 # rusquant 1.0.4
 

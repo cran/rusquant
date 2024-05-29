@@ -19,7 +19,7 @@
 #' @note Not for the faint of heart. All profits and losses related are yours and yours alone. If you don't like it, write it yourself.
 #' @author Vyacheslav Arbuzov
 #' @examples
-#' getSymbols.Gigapack('SBER', field = 'disb.q20',date='2024-01-12')
+#' getSymbols.Gigapack('SBER', field = 'disb.q20')
 #' @export
 
 getSymbols.Gigapack <- function(Symbols,
@@ -36,8 +36,6 @@ getSymbols.Gigapack <- function(Symbols,
                             auto.assign=FALSE,
                             ...)
 {
-  tryCatch(
-  {
   for(i in 1:length(Symbols))
   {
   Symbols.name = Symbols[i]
@@ -46,14 +44,14 @@ getSymbols.Gigapack <- function(Symbols,
     if(fake == FALSE)
     {
       if(field == '') field = 'close'
-      gigapack.downloadUrl  = paste0('https://api.rusquant.io/gigacandles?symbol=',Symbols.name,'&field=',field,'&orient=table&date=',date)
+      gigapack.downloadUrl  = paste0('https://api.rusquant.ru/gigacandles?symbol=',Symbols.name,'&field=',field,'&orient=table&date=',date)
       data_result  = data.table(fromJSON(gigapack.downloadUrl))
       data_result = data_result[order(date)]
     }
     if(fake == TRUE)
     {
       if(field == '') field = 'close'
-      gigapack.downloadUrl  = paste0('https://api.rusquant.io/altergiga?symbol=',Symbols.name,'&field=',field,'&trim=',trim,'&reps=',reps,'&orient=table')
+      gigapack.downloadUrl  = paste0('https://api.rusquant.ru/altergiga?symbol=',Symbols.name,'&field=',field,'&trim=',trim,'&reps=',reps,'&orient=table')
       data_result  = data.table(fromJSON(gigapack.downloadUrl))
       data_result = data_result[order(date)]
     }
@@ -64,13 +62,13 @@ getSymbols.Gigapack <- function(Symbols,
     if(field!='') field_q = paste0('&field=',field)
     if(fake == FALSE)
     {
-      gigapack.downloadUrl  = paste0('https://api.rusquant.io/gigatech?symbol=',Symbols.name,'&orient=table',field_q)
+      gigapack.downloadUrl  = paste0('https://api.rusquant.ru/gigatech?symbol=',Symbols.name,'&orient=table',field_q)
       data_result  = data.table(fromJSON(gigapack.downloadUrl))
       data_result = data_result[order(date)]
     }
     if(fake == TRUE)
     {
-      gigapack.downloadUrl  = paste0('https://api.rusquant.io/altertech?symbol=',Symbols.name,'&orient=table',field_q,'&trim=',trim,'&reps=',reps)
+      gigapack.downloadUrl  = paste0('https://api.rusquant.ru/altertech?symbol=',Symbols.name,'&orient=table',field_q,'&trim=',trim,'&reps=',reps)
       data_result  = data.table(fromJSON(gigapack.downloadUrl))
       data_result = data_result[order(date)]
     }
@@ -83,16 +81,7 @@ getSymbols.Gigapack <- function(Symbols,
   if(auto.assign){
     return(Symbols)
   }
-  return(data_result)},
-    #if an error occurs, tell me the error
-    error=function(e) {
-      message('Server of GigaPack not response - try later')
-      #print(e)
-    },
-    #if a warning occurs, tell me the warning
-    warning=function(w) {
-      message('Check your internet connection')
-    })
+  return(data_result)
 }
 
 

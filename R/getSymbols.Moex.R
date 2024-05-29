@@ -22,7 +22,7 @@
 
 
 
-getSymbols.Moex =
+"getSymbols.Moex" <-
   function(Symbols,env = globalenv(),
              from='2007-01-01',
              to=Sys.Date(),
@@ -33,8 +33,9 @@ getSymbols.Moex =
              auto.assign=FALSE,
              ...)
   {
-    tryCatch(
-      {
+  old <- options()
+  on.exit(options(old))
+  options(timeout=7)
   V2 <- V14 <- V15 <- begin <- high <- low <- volume <- NULL
   for(Symbol.name in Symbols)
   {
@@ -97,11 +98,6 @@ getSymbols.Moex =
       message('Server of MOEX not response - try later')
       return(NULL)
       #print(e)
-    },
-    #if a warning occurs, tell me the warning
-    warning=function(w) {
-      message('Check your internet connection')
-      return(NULL)
     }
   )
 
@@ -154,14 +150,4 @@ getSymbols.Moex =
     if(auto.assign)
       return(Symbols)
     return(dt)
-      },
-  #if an error occurs, tell me the error
-  error=function(e) {
-    message('Server of MOEX not response - try later')
-    #print(e)
-  },
-  #if a warning occurs, tell me the warning
-  warning=function(w) {
-    message('Check your internet connection')
-  })
 }

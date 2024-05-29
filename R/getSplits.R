@@ -12,10 +12,8 @@
 #' getSplits(from=Sys.Date(),to=Sys.Date()+3)
 #' @export
 
-getSplits = function(from=Sys.Date()-10,to=Sys.Date())
+"getSplits" <- function(from=Sys.Date()-10,to=Sys.Date())
 {
-  tryCatch(
-    {
 url = 'https://www.investing.com/stock-split-calendar/Service/getCalendarFilteredData'
 end_date = to
 date = from
@@ -78,16 +76,6 @@ if(status_code(r) != 200)
   Records <- 'cannot connect to server'
 }
 return(Records)
-    },
-#if an error occurs, tell me the error
-error=function(e) {
-  message('Server of investing not response - try later')
-  #print(e)
-},
-#if a warning occurs, tell me the warning
-warning=function(w) {
-  message('Check your internet connection')
-})
 }
 
 

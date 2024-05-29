@@ -12,6 +12,8 @@ getTradelog(
   adjust = FALSE,
   return.class = "data.table",
   index.class = "Date",
+  market = "shares",
+  board = "tqbr",
   verbose = FALSE,
   auto.assign = TRUE,
   env = globalenv()
@@ -32,6 +34,10 @@ getTradelog(
 
 \item{index.class}{Character scalar, specifying the class of the index column. The supported classes are: "Date" and "POSIXct" (default = "Date").}
 
+\item{market}{A character string specifying type of market. 'shares' or 'forts'}
+
+\item{board}{A character string specifying type of board}
+
 \item{verbose}{Logical scalar, specifying whether to print verbose output (default = FALSE).}
 
 \item{auto.assign}{Logical scalar, specifying whether to automatically assign the resulting object to the global environment (default = TRUE).}
@@ -49,6 +55,8 @@ Not for the faint of heart. All profits and losses related are yours and yours a
 }
 \examples{
 getTradelog('BTC_USDT', src = 'poloniex')
+getTradelog('SBER', src = 'moex')
+getTradelog('SiH5', src = 'moex',market='forts')
 }
 \author{
 Vyacheslav Arbuzov

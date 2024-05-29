@@ -14,7 +14,7 @@
 #' @param api.key character indicating the API key to be used for accessing the source.
 #'   The default is an empty string.
 #' @param type character indicating the type of financial instruments to retrieve.
-#'   Only applicable for the "tinkoff" source. Possible values are "Bonds", "Currencies", "Etfs", "Futures", "Options", and "Shares".
+#'   Applicable for the "tinkoff", "gigapack","moex". Possible values are "Bonds", "Currencies", "Etfs", "Futures", "Options", and "Shares".
 #' @param env The environment where the data should be assigned. Defaults to the global environment.
 #' @param user_agent The special headers for parsing
 #'
@@ -23,9 +23,11 @@
 #' @author Vyacheslav Arbuzov
 #' @examples
 #' getSymbolList()
+#' #getSymbolList(src='moex')
+#' #getSymbolList(src='moex',type='Forts')
 #' @export
 
-getSymbolList = function(src='poloniex',
+getSymbolList <- function(src='poloniex',
                   verbose=FALSE,
                   auto.assign=FALSE,
                   country='',
@@ -34,9 +36,56 @@ getSymbolList = function(src='poloniex',
                   env = globalenv(),
                   user_agent = NULL)
 {
-  tryCatch(
-    {
   src <- tolower(src)
+
+  if(src == 'moex')
+  {
+
+    full_url =  ifelse(type == 'Shares','https://iss.moex.com/iss/engines/stock/markets/shares/boards/TQBR/securities.json',
+             'https://iss.moex.com/iss/engines/futures/markets/forts/boards/rfud/securities.json')
+    data_moex = fromJSON(full_url)
+
+    rawdata_m = data.table(data_moex$securities$data)
+    names(rawdata_m) = data_moex$securities$columns
+    result <-paste('symbol_list',toupper(gsub('\\^','',src)),sep='_')
+    if(auto.assign)
+    {
+      assign(result, rawdata_m,env)
+      return(result)
+    }
+    return(rawdata_m)
+  }
+
+
+
+  if(src == 'comon')
+  {
+
+    rawdata_m = fromJSON('https://www.comon.ru/api/v1/strategies?page=1&pageSize=30000')$data
+    result <-paste('symbol_list',toupper(gsub('\\^','',src)),sep='_')
+    if(auto.assign)
+    {
+      assign(result, rawdata_m,env)
+      return(result)
+    }
+    return(rawdata_m)
+  }
+
+
+  if(src == 'gigapack')
+  {
+    rawdata_m = fromJSON('https://api.rusquant.io/gigafields')
+    if(type == 'tech') rawdata_m = fromJSON('https://api.rusquant.io/gigafields?type=tech')
+    if(type == 'candles') rawdata_m = fromJSON('https://api.rusquant.io/gigafields?type=candles')
+    result <-paste('gigafields',toupper(gsub('\\^','',src)),sep='_')
+    if(auto.assign)
+    {
+      assign(result, rawdata_m,env)
+      return(result)
+    }
+    return(rawdata_m)
+  }
+
   if(src == 'rusquant')
   {
     rusquant.url <- 'https://api.rusquant.io/performance'
@@ -304,16 +353,6 @@ getSymbolList = function(src='poloniex',
     return(result)
   }
   return(rawdata_m)
-    },
-  #if an error occurs, tell me the error
-  error=function(e) {
-    message('Server not response - try later')
-    #print(e)
-  },
-  #if a warning occurs, tell me the warning
-  warning=function(w) {
-    message('Check your internet connection')
-  })
 }
 
 

@@ -11,6 +11,8 @@
 #' @param index.class Character scalar, specifying the class of the index column. The supported classes are: "Date" and "POSIXct" (default = "Date").
 #' @param verbose Logical scalar, specifying whether to print verbose output (default = FALSE).
 #' @param auto.assign Logical scalar, specifying whether to automatically assign the resulting object to the global environment (default = TRUE).
+#' @param market A character string specifying type of market. 'shares' or 'forts'
+#' @param board A character string specifying type of board
 #' @param env environment where data is stored
 #'
 #' @return A data table or data frame with the retrieved trade logs, depending on the value of the \code{return.class} argument.
@@ -18,17 +20,62 @@
 #' @author Vyacheslav Arbuzov
 #' @examples
 #' getTradelog('BTC_USDT', src = 'poloniex')
+#' getTradelog('SBER', src = 'moex')
+#' getTradelog('SiH5', src = 'moex',market='forts')
 #' @export
 
-getTradelog = function
+"getTradelog" <- function
 (Symbols,depth=500,src='poloniex',api.key = '',
  adjust=FALSE,return.class='data.table',index.class='Date',
+ market = 'shares',
+ board = 'tqbr',
  verbose=FALSE,
  auto.assign=TRUE,env=globalenv())
 {
-  tryCatch(
-    {
         src <- tolower(src)
+        if(src == 'moex')
+        {
+          engine = ifelse(market == 'shares','stock','futures')
+          if(market == 'forts') board = 'rfud'
+          paginate = TRUE
+          data_pagainated = data.table()
+          tradeno=0
+          while(paginate)
+          {
+            full_url <- sprintf('https://iss.moex.com/iss/engines/%s/markets/%s/boards/%s/securities/%s/trades.json?tradeno=%s',
+                                engine,market, board, Symbols,tradeno)
+            login <- Sys.getenv('MOEX_DATASHOP_LOGIN')
+            password <- Sys.getenv('MOEX_DATASHOP_PASSWORD')
+            cookie_value <- Sys.getenv('MOEX_DATASHOP_COOKIE')
+            if(login == '' & password=='')
+              return('authenticate to ISS Moex using login/password ')
+            headers = c('Cookie' =  paste0('MicexPassportCert=',cookie_value))
+            response <- GET(full_url, encode = "json",add_headers(headers))
+            if(response$status_code==200)
+            {
+              json_response <- content(response, "text", encoding = "UTF-8")
+              json_response <- fromJSON(json_response)
+              data_result = data.table(json_response$trades$data)
+              if(nrow(data_result)>0)
+              {
+                setnames(data_result,json_response$trades$columns)
+                for(col in c('PRICE', 'QUANTITY','TRADENO','TRADINGSESSION','DECIMALS','VALUE','TRADETIME_GRP'))
+                  set(data_result, j = col, value = as.numeric(data_result[[col]]))
+                data_pagainated =  rbind(data_pagainated,data_result)
+                if(nrow(data_result) != 5000) paginate = FALSE
+                if(nrow(data_result) >= 5000) tradeno = max(data_pagainated[,1])
+              }
+            }
+          }
+          return(data_pagainated)
+          if(response$status_code!=200)
+            if(verbose) return(content(response, as = "parsed"))
+        }
+
+
+
+
+
         ## choose exchange
         if (src == "tinkoff")
         {
@@ -191,15 +238,6 @@ getTradelog = function
                 assign(Symbols[1], trades,env)
                 return(Symbols)
         }
+
         return(trades)
-    },
-    #if an error occurs, tell me the error
-    error=function(e) {
-      message('Server not response - try later')
-      #print(e)
-    },
-    #if a warning occurs, tell me the warning
-    warning=function(w) {
-      message('Check your internet connection')
-    })
 }

@@ -24,7 +24,7 @@ getDividends(
 
 \item{to}{end date of the dividends data. Default is today}
 
-\item{country}{a character string with the country name to filter dividends data for (only for Investing.com). One from Argentina,Australia,Austria,Bahrain,Belgium,Bosnia-Herzegovina,Botswana,Brazil,Bulgaria,Canada,Chile,China,Colombia,Costa Rica,Croatia,Cyprus,Czech Republic,Denmark,Egypt,Finland,France,Germany,Greece,Hong Kong,Hungary,Iceland,India,Indonesia,Ireland,Israel,Italy,Japan,Jordan,Kenya,Kuwait,Lebanon,Luxembourg,Malaysia,Malta,Mauritius,Mexico,Morocco,Namibia,Netherlands,New Zealand,Nigeria,Norway,Oman,Pakistan,Palestinian Territory,Peru,Philippines,Poland,Portugal,Qatar,Romania,Russia,Saudi Arabia,Serbia,Singapore,Slovakia,Slovenia,South Africa,South Korea,Spain,Sri Lanka,Sweden,Switzerland,Taiwan,Thailand,Tunisia,Turkey,Uganda,Ukraine,United Arab Emirates,United Kingdom,United States,Venezuela,Vietnam,Zimbabwe}
+\item{country}{a character string with the country name to filter dividends data for (only for Investing.com)}
 }
 \value{
 a list with dividends data
@@ -36,7 +36,7 @@ This function returns dividends data from Investing.com or Tinkoff broker.
 Not for the faint of heart. All profits and losses related are yours and yours alone. If you don't like it, write it yourself.
 }
 \examples{
-getDividends(from = '2023-08-01',to = '2023-08-05',country = "Australia")
+getDividends(from = Sys.Date(),to = Sys.Date()+10,country = "Australia")
 }
 \author{
 Vyacheslav Arbuzov

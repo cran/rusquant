@@ -19,10 +19,11 @@
 #' @author Vyacheslav Arbuzov
 #' @examples
 #' getSymbols.Poloniex('BTC_USDT')
+#' #getSymbols('BTC_USDT',src='Poloniex')
 #'
 #' @export
 
-getSymbols.Poloniex = function
+"getSymbols.Poloniex" <- function
 (Symbols,env,return.class='xts',index.class='Date',
  from='2007-01-01',
  to=Sys.Date(),
@@ -32,8 +33,6 @@ getSymbols.Poloniex = function
  auto.assign=FALSE,
  ...)
 {
-  tryCatch(
-    {
   Polo.period <- 0
   Polo.max_candles <- 1000
   Polo.from <- format(1000*as.numeric(as.POSIXct(from)),scientific = F) #convert to UNIX timestamp
@@ -91,15 +90,6 @@ getSymbols.Poloniex = function
   if(auto.assign){
     return(Symbols)
   }
+
   return(rawdata)
-    },
-  #if an error occurs, tell me the error
-  error=function(e) {
-    message('Server of Poloniex not response - try later')
-    #print(e)
-  },
-  #if a warning occurs, tell me the warning
-  warning=function(w) {
-    message('Check your internet connection')
-  })
 }

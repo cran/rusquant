@@ -52,6 +52,7 @@ Not for the faint of heart. All profits and losses related are yours and yours a
 }
 \examples{
 getSymbols.Poloniex('BTC_USDT')
+#getSymbols('BTC_USDT',src='Poloniex')
 
 }
 \author{

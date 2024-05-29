@@ -22,9 +22,8 @@
 
 getTrades = function(src='',api.key = '',clientId='',figi ='',from = Sys.Date()-5, to = Sys.Date(), symbol_info = FALSE, time_transform = TRUE, verbose = FALSE)
 {
-  tryCatch(
-    {
   src <- tolower(src)
+
   ## choose exchange
   if(src == 'tinkoff')
   {
@@ -67,15 +66,4 @@ getTrades = function(src='',api.key = '',clientId='',figi ='',from = Sys.Date()-
     if(response$status_code!=200)
       if(verbose) return(content(response, as = "parsed"))
   }
-    },
-  #if an error occurs, tell me the error
-  error=function(e) {
-    message('Server not response - try later')
-    #print(e)
-  },
-  #if a warning occurs, tell me the warning
-  warning=function(w) {
-    message('Check your internet connection')
-  })
 }
-

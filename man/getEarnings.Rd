@@ -15,7 +15,7 @@ getEarnings(
 
 \item{to}{the end date in yyyy-mm-dd format (default is the current date)}
 
-\item{country}{the country from which to get earnings data (default is United States). One from Argentina,Australia,Austria,Bahrain,Belgium,Bosnia-Herzegovina,Botswana,Brazil,Bulgaria,Canada,Chile,China,Colombia,Costa Rica,Croatia,Cyprus,Czech Republic,Denmark,Egypt,Finland,France,Germany,Greece,Hong Kong,Hungary,Iceland,India,Indonesia,Ireland,Israel,Italy,Japan,Jordan,Kenya,Kuwait,Lebanon,Luxembourg,Malaysia,Malta,Mauritius,Mexico,Morocco,Namibia,Netherlands,New Zealand,Nigeria,Norway,Oman,Pakistan,Palestinian Territory,Peru,Philippines,Poland,Portugal,Qatar,Romania,Russia,Saudi Arabia,Serbia,Singapore,Slovakia,Slovenia,South Africa,South Korea,Spain,Sri Lanka,Sweden,Switzerland,Taiwan,Thailand,Tunisia,Turkey,Uganda,Ukraine,United Arab Emirates,United Kingdom,United States,Venezuela,Vietnam,Zimbabwe}
+\item{country}{the country from which to get earnings data (default is United States)}
 }
 \value{
 a data frame with earnings data
@@ -27,7 +27,7 @@ This function retrieves earnings data from the investing.com website for a speci
 Not for the faint of heart. All profits and losses related are yours and yours alone. If you don't like it, write it yourself.
 }
 \examples{
-getEarnings(from = '2023-02-07',to = '2023-02-13',country='Belgium')
+getEarnings(from = Sys.Date(),to = Sys.Date()+5,country='Belgium')
 }
 \author{
 Vyacheslav Arbuzov
