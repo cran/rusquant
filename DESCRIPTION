@@ -1,9 +1,15 @@
 Package: rusquant
 Type: Package
 Title: Quantitative Trading Framework
-Version: 1.1.1
-Date: 2024-05-29
-Author: Vyacheslav Arbuzov[cph, cre, aut], Sergey Edunov[aut]
+Version: 1.1.4
+Date: 2024-09-16
+Authors@R: c(person(given = "Vyacheslav",
+                       family = "Arbuzov",
+                       role = c("cph", "cre", "aut"),
+                       email = "arbuzov1989@gmail.com"),
+                person(given = "Sergey",
+                       family = "Edunov",
+                       role = "aut"))
 Depends: quantmod,data.table,jsonlite,httr,xts
 Imports: XML,stringr,jose,stats,rvest,base64enc
 Maintainer: Vyacheslav Arbuzov <arbuzov1989@gmail.com>
@@ -15,6 +21,8 @@ URL: https://rusquant.ru
 BugReports: https://github.com/arbuzovv/rusquant/issues
 RoxygenNote: 7.2.3
 NeedsCompilation: no
-Packaged: 2024-05-29 19:57:29 UTC; vyacheslav
+Packaged: 2024-09-16 11:46:38 UTC; vyacheslav
+Author: Vyacheslav Arbuzov [cph, cre, aut],
+  Sergey Edunov [aut]
 Repository: CRAN
-Date/Publication: 2024-05-29 20:20:06 UTC
+Date/Publication: 2024-09-16 15:10:02 UTC

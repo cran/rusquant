@@ -1,4 +1,4 @@
-f110df114e5d1069c8fab0444820f9aa *DESCRIPTION
+2d0cb9d3b400e089a0e78ff3e8d12efb *DESCRIPTION
 7aaa98cc01033f678a2c946249c6ba0c *NAMESPACE
 e907959f697d258f974c525c835ce9e4 *NEWS
 27608a53dfc3a827ddfd77012aa0495e *NEWS.md
@@ -13,17 +13,17 @@ d9c3d75499f076fe08df81b91fe58687 *R/getEconomic.R
 8f7c91bac80278e9c3714699232662a9 *R/getOrders.R
 40ac4382d7f9e179a23f7480955b6746 *R/getPortfolio.R
 5ca95fe525da6e2f5b6d399fb256f785 *R/getSplits.R
-17f554ac05d5ee5891a02807485b6fa6 *R/getSymbolList.r
+180fe0f7b0fb3b2d3373ffaa506cb431 *R/getSymbolList.r
 6988467fc7fd86a4eeb582a53d68a8d2 *R/getSymbols.Algopack.R
 a97993dc61b8a0c5f2fb805fc39a2dca *R/getSymbols.Alor.R
-2cdd0ff3b47af69363226a07383e9445 *R/getSymbols.Comon.R
-19d6eb84f41de16febcae4a90098ee41 *R/getSymbols.Finam.R
+7efd7c9f4bcbf4a2aa55f6de945ed5b1 *R/getSymbols.Comon.R
+bdbe0336fd718d9da11d9dda116123e8 *R/getSymbols.Finam.R
 c0023cdb535fe890203a6029e61d088b *R/getSymbols.Gigapack.R
 e1584dfef30122be6de09b3c58b1298c *R/getSymbols.MarketWatch.R
 577d8ea9b3c38824d92cfd088a00326c *R/getSymbols.Mfd.R
 7e512d2d10ce6c64ab9666118ffe21a0 *R/getSymbols.Moex.R
 29d34d862f21938d13c95ee6ca3a79d6 *R/getSymbols.Poloniex.R
-1f91a72cf0efeefa169a39f1fe59263b *R/getSymbols.Rusquant.R
+f83626b87d580fa131b40fbf080b9f97 *R/getSymbols.Rusquant.R
 5325ca995cbe0ccecc5542d1e2f283f8 *R/getSymbols.Tinkoff.R
 eb0f61eedc3a860aab766cf51fc6e7c5 *R/getTradelog.R
 70b9bf395f90056fc7ef145457993825 *R/getTrades.R
@@ -43,7 +43,7 @@ dc0445d00bf35668603ace639cf94558 *man/getSymbolList.Rd
 0aa797bd2acb42017a1502b2770d81a0 *man/getSymbols.Algopack.Rd
 100fdaf3143dd22cd48bdff2d369dcd5 *man/getSymbols.Alor.Rd
 4c4504f8a553f1ef2e4c262d745a5c92 *man/getSymbols.Comon.Rd
-9d8261d3eb51bd6c691ec07faa51581c *man/getSymbols.Finam.Rd
+e8dd61b5410c9fd5965199739dae4fb9 *man/getSymbols.Finam.Rd
 b3d4a38da6070afda774cc59a10d10ea *man/getSymbols.Gigapack.Rd
 1a9b68c2b380e894db88d182fdb44644 *man/getSymbols.MarketWatch.Rd
 74d28d03d4c82edcfcb9492d38640e01 *man/getSymbols.Mfd.Rd

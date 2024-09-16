@@ -74,7 +74,7 @@ getSymbolList <- function(src='poloniex',
 
   if(src == 'gigapack')
   {
-    rawdata_m = fromJSON('https://api.rusquant.io/gigafields')
+    rawdata_m = fromJSON('https://api.rusquant.ru/gigafields')
     if(type == 'tech') rawdata_m = fromJSON('https://api.rusquant.io/gigafields?type=tech')
     if(type == 'candles') rawdata_m = fromJSON('https://api.rusquant.io/gigafields?type=candles')
     result <-paste('gigafields',toupper(gsub('\\^','',src)),sep='_')
@@ -88,7 +88,7 @@ getSymbolList <- function(src='poloniex',
 
   if(src == 'rusquant')
   {
-    rusquant.url <- 'https://api.rusquant.io/performance'
+    rusquant.url <- 'https://api.rusquant.ru/performance'
     rusquant.params = list('token' = api.key,
                            'market' = 'ru')
     response <- GET(rusquant.url,query = rusquant.params)

@@ -27,7 +27,12 @@ getSymbols.Comon <- function(Symbols,
   for(i in 1:length(Symbols))
   {
   Symbols.name = Symbols[i]
-  data_result = fromJSON(paste0('https://www.comon.ru/api/v1/strategies/',Symbols.name,'/profit'))$data
+  data_result = GET(paste0('https://www.comon.ru/api/v1/strategies/',Symbols.name,'/profit'), add_headers(
+    `User-Agent` = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3',
+    `Accept` = 'application/json'
+  ))
+  data_result = content(data_result)
+  data_result = rbindlist(data_result$data)
   if(auto.assign){
     assign(Symbols[[i]], data_result, env)
   }

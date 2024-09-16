@@ -55,7 +55,7 @@ Not for the faint of heart. All profits and losses related are yours and yours a
 }
 \examples{
 api_key = 'set_if_use_API'
-getSymbols('SBER',src='Finam',api.key = api_key)
+getSymbols('SBER',src='Finam',from='2023-01-01',api.key = api_key)
 }
 \author{
 Vyacheslav Arbuzov
